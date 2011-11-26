@@ -2,6 +2,10 @@ Flying is a tool for monitoring websites and apps. It was designed to be as simp
 
 ###Getting started
 
+Install the gem:
+
+    gem install flying
+
 Create a Ruby file anywhere with the following content:
 
 ```ruby
@@ -18,7 +22,7 @@ Now, just run in your terminal:
 
     ruby flying.rb
 
-Whenever one of those two sites gets offline, it will warn you and stop monitoring.
+Whenever one of those two sites gets offline, Flying will warn you and stop monitoring.
 
 ###Goal of the project
 
