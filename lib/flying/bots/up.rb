@@ -4,14 +4,39 @@ module Flying
   module Bot
     class Up
       attr_reader :message, :error, :referer
-      
-      def initialize(referer, *options)
+      #
+      # => Name
+      #
+      # How a service is known. Useful reusing and setting dependencies.
+      #
+      #   e.g. `site "etc.com", :as => :google`
+      #   name is :google.
+      #
+      # => Dependency
+      #
+      # When a service depends on another, it has dependencies. This is
+      # an array with the Name of each service.
+      #
+      attr_accessor :name, :dependency
+
+      def initialize(referer, options = {})
         @referer = referer
         @options = options
         @message = "Ok."
         @error = false
+        @name = options[:as] if options.include?(:as)
+        @dependency = []
+        
+        # Dependency can be one or an array of symbols, whereas @dependency 
+        # must be only a flat array
+        if options.include?(:depends_on)
+          @dependency << options[:depends_on] if options[:depends_on].kind_of? Symbol
+          @dependency = options[:depends_on] if options[:depends_on].kind_of? Array
+        end
       end
       
+      # Starts assessment of the current service using variables set during
+      # initialization
       def assess
         @error = false
         begin

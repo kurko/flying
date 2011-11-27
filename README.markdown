@@ -39,7 +39,7 @@ notify_me :email => "email@gmail.com"
 
 # When an error happens, monitoring stops. :on_error_continue
 # makes Flying ignore the error and continue monitoring.
-site "http://www.google.com", :as => :google, :on_error_continue
+site "http://www.google.com", :as => :google, :on_error => :continue
 
 # If :google is down (above, :as => :google), Flying will notify the related services,
 # e.g. 'www.mysite.com is probably not working properly because :google is offline'
