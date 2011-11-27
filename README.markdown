@@ -14,6 +14,8 @@ require "flying"
 
 site "http://www.google.com"
 site "http://www.nytimes.com"
+
+start # starts monitoring
 ```
 
 Now, just run in your terminal:
@@ -53,6 +55,8 @@ site "http://www.fedex.com/webservice", :format => :xml
 # - Looks for config/database.yml and tries connecting to all possible DBs, except
 #   'development' and 'test'
 rails_app "ssh://kurko@google.com", :path => "/var/rails/google"
+
+start
 ```
 
 ###License
