@@ -1,7 +1,10 @@
 module Kernel
   def site(referer, *options)
-    process = Flying::Bot::Up.new
-    assessment = process.assess(referer, options)
-    puts process.message unless assessment
+    bot = Flying::Bot::Up.new(referer, options)
+    Flying.add_bot(bot)
+  end
+  
+  def start
+    Flying.start
   end
 end

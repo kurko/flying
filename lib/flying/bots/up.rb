@@ -3,27 +3,32 @@ require "net/http"
 module Flying
   module Bot
     class Up
-      attr_reader :message
+      attr_reader :message, :error, :referer
       
-      def initialize
+      def initialize(referer, *options)
+        @referer = referer
+        @options = options
         @message = "Ok."
+        @error = false
       end
       
-      def assess(referer, *options)
+      def assess
+        @error = false
         begin
-          response_code = get_http_response_code(referer)
+          response_code = get_http_response_code(@referer)
         rescue
           Flying.an_error_ocurred(true)
-          set_error_message(referer, false, $!)
+          set_error_message(@referer, false, $!)
           return false
         end
         return true if ["200", "302"].include? response_code
         Flying.an_error_ocurred(true)
-        set_error_message(referer, response_code.to_s)
+        set_error_message(@referer, response_code.to_s)
         false
       end
       
       def set_error_message(referer, response_code, error_details = '')
+        @error = true
         case response_code
         when false
           @message = message_unreachable
@@ -34,7 +39,7 @@ module Flying
         else
           @message = message_unknown_error + "(#{error_details})"
         end
-        @message = referer + ": " + @message
+        @message = "\e[31m" + referer + ": " + @message + "\e[0m"
       end
       
       def get_http_response_code referer
