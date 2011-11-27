@@ -14,7 +14,7 @@ describe Flying::Bot::Up do
     it "returns false if 404 and saves a message" do
       subject.stub(:get_http_response_code).and_return("404")
       subject.assess.should be_false
-      subject.message.should == "http://www.google.com: The target was simply not found (404)."
+      subject.message.should =~ /google\.com.*target was simply not found \(404\)/
     end
   end
 end
